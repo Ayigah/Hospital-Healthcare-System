@@ -22,12 +22,12 @@ The Hospital Healthcare System is a software solution designed to streamline ope
 2. #### Navigate the respority:
    - cd Hospital-Healthcare-System
 3. #### Install the required dependencies (if applicable):
-   - npm install <br>
-   OR <br>
+   - npm install <br><br>
+       **OR** <br>
    - pip install -r requirements.txt <br>
 4. #### Run the Application:
-   - npm start <br>
-   OR <br>
+   - npm start <br><br>
+       **OR** <br>
    - python app.py
 
 ## 💡 Usage

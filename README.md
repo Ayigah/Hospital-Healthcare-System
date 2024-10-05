@@ -13,7 +13,7 @@ The Hospital Healthcare System is a software solution designed to streamline ope
 
 ❌ Appointment Cancellation: Patients can cancel appointments via the website or by contacting the hospital staff, who can cancel on their behalf.
 
-## ⚙️  to Install and Run
+## ⚙️  To Install and Run
 1. Clone the respository:
    - git clone https://github.com/yourusername/Hospital-Healthcare-System.git
 2. Navigate the respority:

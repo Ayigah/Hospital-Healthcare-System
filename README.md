@@ -3,7 +3,7 @@
 The Hospital Healthcare System is a software solution designed to streamline operations in a healthcare facility. It manages patient registration, appointment booking, prescription availability, appointment outcomes, and appointment cancellations, providing an efficient and user-friendly experience for both patients and staff.
 
 ### Tools and Languages <br>
-    [![](https://skillicons.dev/icons?i=py,mysql&perline=12)]()
+[![](https://skillicons.dev/icons?i=py,mysql&perline=12)]()
          
 ## 🚀 Key Features
 - 📝 **Patient Registration:** Receptionists can register new patients by collecting essential details such as name, date of birth, and address. Each patient is assigned a unique patient number for easy identification.

@@ -2,7 +2,7 @@
 ## 📝 Overview
 The Hospital Healthcare System is a software solution designed to streamline operations in a healthcare facility. It manages patient registration, appointment booking, prescription availability, appointment outcomes, and appointment cancellations, providing an efficient and user-friendly experience for both patients and staff.
 
-### 🛠 Tools and Languages <br>
+## 🛠 Tools and Languages <br>
 [![](https://skillicons.dev/icons?i=py,mysql&perline=12)]()
          
 ## 🚀 Key Features

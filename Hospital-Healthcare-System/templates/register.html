@@ -1,0 +1,54 @@
+{% extends "base.html" %} {% block content %}
+<h2>Register a New Patient</h2>
+<form method="POST" action="/register">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" name="name" required />
+  </div>
+  <div class="form-group">
+    <label for="age">Age</label>
+    <input type="number" class="form-control" id="age" name="age" required />
+  </div>
+  <div class="form-group">
+    <label for="contact">Contact</label>
+    <input
+      type="text"
+      class="form-control"
+      id="contact"
+      name="contact"
+      required
+    />
+  </div>
+  <button type="submit" class="btn btn-primary mt-3">Register</button>
+</form>
+
+<hr />
+
+<h2>Existing Patients</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Contact</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for patient in patients %}
+    <tr>
+      <td>{{ patient[0] }}</td>
+      <td>{{ patient[1] }}</td>
+      <td>{{ patient[2] }}</td>
+      <td>{{ patient[3] }}</td>
+      <td>
+        <form method="POST" action="/deregister/{{ patient[0] }}">
+          <button class="btn btn-danger" type="submit">Deregister</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

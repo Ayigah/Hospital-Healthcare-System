@@ -1,0 +1,39 @@
+{% extends "base.html" %} {% block content %}
+<h2>Doctor Dashboard</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Patient Name</th>
+      <th>Doctor Name</th>
+      <th>Appointment Date</th>
+      <th>Status</th>
+      <th>Prescription</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for appointment in appointments %}
+    <tr class="{% if appointment[4] == 1 %}table-success{% endif %}">
+      <td>{{ appointment[0] }}</td>
+      <td>{{ appointment[1] }}</td>
+      <td>{{ appointment[2] }}</td>
+      <td>{{ appointment[3] }}</td>
+      <td>{% if appointment[4] == 1 %}Completed{% else %}Pending{% endif %}</td>
+      <td>{{ appointment[5] if appointment[5] else 'No prescription' }}</td>
+      <td>
+        {% if appointment[4] == 0 %}
+        <a
+          href="{{ url_for('mark_appointment_complete', appointment_id=appointment[0]) }}"
+          class="btn btn-primary"
+          >Mark Complete</a
+        >
+        {% else %}
+        <span class="btn btn-success disabled">Completed</span>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

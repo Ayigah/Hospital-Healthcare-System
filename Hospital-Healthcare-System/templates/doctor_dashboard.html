@@ -1,39 +1,100 @@
 {% extends "base.html" %} {% block content %}
-<h2>Doctor Dashboard</h2>
-<table class="table">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Patient Name</th>
-      <th>Doctor Name</th>
-      <th>Appointment Date</th>
-      <th>Status</th>
-      <th>Prescription</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for appointment in appointments %}
-    <tr class="{% if appointment[4] == 1 %}table-success{% endif %}">
-      <td>{{ appointment[0] }}</td>
-      <td>{{ appointment[1] }}</td>
-      <td>{{ appointment[2] }}</td>
-      <td>{{ appointment[3] }}</td>
-      <td>{% if appointment[4] == 1 %}Completed{% else %}Pending{% endif %}</td>
-      <td>{{ appointment[5] if appointment[5] else 'No prescription' }}</td>
-      <td>
-        {% if appointment[4] == 0 %}
-        <a
-          href="{{ url_for('mark_appointment_complete', appointment_id=appointment[0]) }}"
-          class="btn btn-primary"
-          >Mark Complete</a
-        >
-        {% else %}
-        <span class="btn btn-success disabled">Completed</span>
-        {% endif %}
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<!-- Welcome Message -->
+<div class="alert alert-info text-center" role="alert">
+  Welcome, Doctor! Here's your dashboard.
+</div>
+
+<!-- Dashboard Container -->
+<div
+  class="container mt-5"
+  style="background-color: #fff; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); padding: 20px;"
+>
+  <h3 class="mb-4">Doctor Dashboard</h3>
+
+  <hr />
+
+  <!-- Appointments Section -->
+  <h4>Your Appointments</h4>
+  <div class="card">
+    <div class="card-body">
+      {% if appointments %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Patient</th>
+            <th>Status</th>
+            <th>Outcome & Prescription</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for appointment in appointments %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ appointment['appointment_date'] }}</td>
+            <td>{{ appointment['patient_name'] }}</td>
+            <td>
+              {% if appointment['status'] == 'Pending' %}
+              <span class="badge bg-warning text-dark">Pending</span>
+              {% elif appointment['status'] == 'Confirmed' %}
+              <span class="badge bg-success">Confirmed</span>
+              {% elif appointment['status'] == 'Completed' %}
+              <span class="badge bg-info text-dark">Completed</span>
+              {% else %}
+              <span class="badge bg-secondary">Unknown</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if appointment['prescription'] %}
+              <span class="text-success"
+                >{{ appointment['prescription'] }}</span
+              >
+              {% else %}
+              <span class="text-muted">No Outcome & No Prescription yet</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if appointment['status'] == 'Confirmed' %}
+              <!-- Form to mark the appointment as completed and add a prescription -->
+              <form
+                method="POST"
+                action="{{ url_for('mark_appointment_complete', appointment_id=appointment['id']) }}"
+              >
+                <input
+                  type="hidden"
+                  name="appointment_id"
+                  value="{{ appointment['id'] }}"
+                />
+                <div class="form-group">
+                  <label for="prescription">Outcome & Prescription</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="prescription"
+                    placeholder="Enter outcome & prescription"
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  name="mark_complete"
+                  class="btn btn-success btn-sm mt-2"
+                >
+                  Mark as Completed
+                </button>
+              </form>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p class="text-muted">No appointments at the moment.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
 {% endblock %}

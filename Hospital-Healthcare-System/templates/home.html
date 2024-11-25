@@ -1,4 +1,18 @@
 {% extends "base.html" %} {% block content %}
-<h1>Welcome to the Health Center Management System</h1>
-<p>Select an option from the navigation bar to get started.</p>
+<div class="home-container">
+  <div class="content">
+    <h2>Welcome to the Health Care Management System</h2>
+    <h3>This is a demo for the actual system</h3>
+    <h4 class="green">by Group F</h4>
+    <a href="/login" class="btn btn-primary">Login</a>
+  </div>
+  <br />
+  <div class="image-container">
+    <img
+      src="{{ url_for('static', filename='images/healthcare_image.jpg') }}"
+      alt="Health Care Image"
+      class="img-fluid"
+    />
+  </div>
+</div>
 {% endblock %}

@@ -1,0 +1,191 @@
+{% extends "base.html" %} {% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <!-- Fixed Sidebar -->
+    <div class="col-md-3 sidebar">
+      <div class="menu-bar">
+        <a href="javascript:void(0)" onclick="showSection('patientDetails')"
+          >Your Details</a
+        >
+        <a href="javascript:void(0)" onclick="showSection('requestAppointment')"
+          >Request Appointment</a
+        >
+        <a href="javascript:void(0)" onclick="showSection('appointments')"
+          >Your Appointments</a
+        >
+      </div>
+    </div>
+
+    <!-- Content Area -->
+    <div class="col-md-9 content-area">
+      <!-- Patient Details Section -->
+      <div class="content-section" id="patientDetails">
+        <div class="section-container">
+          <h4>Welcome, {{ patient['name'] }}</h4>
+          <hr />
+          <h5>Your Details</h5>
+          <div class="row">
+            <div class="col-md-6">
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <th>Username</th>
+                    <td>{{ patient['username'] }}</td>
+                  </tr>
+                  <tr>
+                    <th>Full Name</th>
+                    <td>{{ patient['name'] }}</td>
+                  </tr>
+                  <tr>
+                    <th>Age</th>
+                    <td>{{ patient['age'] }}</td>
+                  </tr>
+                  <tr>
+                    <th>Contact</th>
+                    <td>{{ patient['contact'] }}</td>
+                  </tr>
+                  <tr>
+                    <th>Role</th>
+                    <td>{{ patient['role'] }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Request Appointment Section -->
+      <div class="content-section" id="requestAppointment">
+        <div class="section-container">
+          <h4>Request a New Appointment</h4>
+          <form method="POST" action="{{ url_for('request_appointment') }}">
+            <div class="form-group">
+              <label for="doctor_id">Select Doctor</label>
+              <select
+                class="form-control"
+                id="doctor_id"
+                name="doctor_id"
+                required
+              >
+                {% for doctor in doctors %}
+                <option value="{{ doctor['id'] }}">{{ doctor['name'] }}</option>
+                {% else %}
+                <option>No doctors available</option>
+                {% endfor %}
+              </select>
+            </div>
+            <br />
+            <div class="form-group">
+              <label for="appointment_date">Appointment Date</label>
+              <input
+                type="datetime-local"
+                class="form-control"
+                id="appointment_date"
+                name="appointment_date"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">
+              Request Appointment
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Appointments Section -->
+      <div class="content-section" id="appointments">
+        <div class="section-container">
+          <h4>Your Appointments</h4>
+          <div class="card">
+            <div class="card-body">
+              {% if appointments %}
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Date</th>
+                    <th>Doctor</th>
+                    <th>Status</th>
+                    <th>Prescription</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for appointment in appointments %}
+                  <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ appointment['appointment_date'] }}</td>
+                    <td>{{ appointment['doctor_name'] }}</td>
+                    <td>
+                      {% if appointment['status'] == "Pending" %}
+                      <span class="badge bg-warning text-dark">Pending</span>
+                      {% elif appointment['status'] == "Confirmed" %}
+                      <span class="badge bg-success">Confirmed</span>
+                      {% elif appointment['status'] == "Completed" %}
+                      <span class="badge bg-info text-dark">Completed</span>
+                      {% endif %}
+                    </td>
+                    <td>
+                      {% if appointment['prescription'] %}
+                      <span class="text-success"
+                        >{{ appointment['prescription'] }}</span
+                      >
+                      {% else %}
+                      <span class="text-muted">No Outcome yet</span>
+                      {% endif %}
+                    </td>
+                    <td>
+                      {% if appointment['status'] == 'Pending' %}
+                      <!-- Cancel Pending Appointments -->
+                      <form method="POST" style="display:inline;">
+                        <input
+                          type="hidden"
+                          name="appointment_id"
+                          value="{{ appointment['id'] }}"
+                        />
+                        <button
+                          type="submit"
+                          name="cancel_appointment"
+                          class="btn btn-danger btn-sm"
+                        >
+                          Cancel
+                        </button>
+                      </form>
+                      {% elif appointment['status'] == 'Completed' %}
+                      <!-- Remove Completed Appointments -->
+                      <form method="POST" style="display:inline;">
+                        <input
+                          type="hidden"
+                          name="appointment_id"
+                          value="{{ appointment['id'] }}"
+                        />
+                        <button
+                          type="submit"
+                          name="remove_completed"
+                          class="btn btn-warning btn-sm"
+                        >
+                          Remove
+                        </button>
+                      </form>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              {% else %}
+              <p class="text-muted">
+                You have no appointments at the moment. Book an appointment to
+                get started!
+              </p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

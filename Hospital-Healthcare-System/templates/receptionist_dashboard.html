@@ -1,0 +1,335 @@
+{% extends "base.html" %} {% block content %}
+<div class="container-fluid">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="menu-bar">
+      <a href="javascript:void(0)" onclick="showSection('registerPatient')"
+        >Register Patient</a
+      >
+      <a href="javascript:void(0)" onclick="showSection('assignAppointment')"
+        >Assign Appointment</a
+      >
+      <a href="javascript:void(0)" onclick="showSection('pendingAppointments')"
+        >Pending Appointments</a
+      >
+      <a href="javascript:void(0)" onclick="showSection('assignedAppointments')"
+        >Assigned Appointments</a
+      >
+      <a
+        href="javascript:void(0)"
+        onclick="showSection('confirmedAppointments')"
+        >Confirmed Appointments</a
+      >
+      <a href="javascript:void(0)" onclick="showSection('patients')"
+        >De-register a Patient</a
+      >
+    </div>
+  </div>
+
+  <!-- Content Area -->
+  <div class="content-area">
+    <!-- Register Patient Section -->
+    <div class="content-section" id="registerPatient">
+      <h4>Register New Patient</h4>
+      <form method="POST">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            name="username"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input
+            type="number"
+            class="form-control"
+            id="age"
+            name="age"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="contact">Contact</label>
+          <input
+            type="text"
+            class="form-control"
+            id="contact"
+            name="contact"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="role">Role</label>
+          <select class="form-control" id="role" name="role">
+            <option value="patient">Patient</option>
+          </select>
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary mt-3"
+          name="register_patient"
+        >
+          Register Patient
+        </button>
+      </form>
+      <script>
+        // When the form is submitted, send the data using fetch
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Prepare the form data
+            const formData = new FormData(this);
+
+            // Use fetch to send data to the 'register_patient' route
+            fetch("{{ url_for('register_patient') }}", {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json()) // Assuming you return JSON from the server
+            .then(data => {
+                if (data.success) {
+                    // Handle success (e.g., show a success message or refresh the list)
+                    alert('Patient registered successfully!');
+                } else {
+                    // Handle error (e.g., show an error message)
+                    alert('Error: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        });
+      </script>
+    </div>
+
+    <!-- Assign Appointment Section -->
+    <div class="content-section" id="assignAppointment">
+      <h4>Assign an Appointment</h4>
+      <form method="POST">
+        <div class="form-group">
+          <label for="patient_id">Select Patient</label>
+          <select
+            class="form-control"
+            id="patient_id"
+            name="patient_id"
+            required
+          >
+            {% if patients %} {% for patient in patients %}
+            <option value="{{ patient['id'] }}">{{ patient['name'] }}</option>
+            {% endfor %} {% else %}
+            <option disabled>No patients available</option>
+            {% endif %}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="doctor_id">Select Doctor</label>
+          <select class="form-control" id="doctor_id" name="doctor_id" required>
+            {% if doctors %} {% for doctor in doctors %}
+            <option value="{{ doctor['id'] }}">{{ doctor['name'] }}</option>
+            {% endfor %} {% else %}
+            <option disabled>No doctors available</option>
+            {% endif %}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="appointment_date">Appointment Date</label>
+          <input
+            type="datetime-local"
+            class="form-control"
+            id="appointment_date"
+            name="appointment_date"
+            required
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary mt-3"
+          name="assign_appointment"
+        >
+          Assign Appointment
+        </button>
+      </form>
+    </div>
+
+    <!-- Pending Appointments Section -->
+    <div class="content-section" id="pendingAppointments">
+      <h4>Pending Appointment Requests</h4>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for appointment in pending_appointments %}
+          <tr>
+            <td>{{ appointment['patient_name'] }}</td>
+            <td>{{ appointment['doctor_name'] }}</td>
+            <td>{{ appointment['appointment_date'] }}</td>
+            <td>
+              <form
+                method="POST"
+                action="{{ url_for('confirm_assigned', appointment_id=appointment['id']) }}"
+              >
+                <button type="submit" class="btn btn-success btn-sm">
+                  Confirm
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Assigned Appointments Section -->
+    <div class="content-section" id="assignedAppointments">
+      <h4>Assigned Appointments</h4>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for appointment in assigned_appointments %}
+          <tr>
+            <td>{{ appointment['patient_name'] }}</td>
+            <td>{{ appointment['doctor_name'] }}</td>
+            <td>{{ appointment['appointment_date'] }}</td>
+            <td>{{ appointment['status'] }}</td>
+            <td>
+              <form
+                method="POST"
+                action="{{ url_for('confirm_assigned', appointment_id=appointment['id']) }}"
+              >
+                <button type="submit" class="btn btn-success btn-sm">
+                  Confirm
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Confirmed Appointments Section -->
+    <div class="content-section" id="confirmedAppointments">
+      <h4>Confirmed Appointments</h4>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for appointment in confirmed_appointments %}
+          <tr>
+            <td>{{ appointment['patient_name'] }}</td>
+            <td>{{ appointment['doctor_name'] }}</td>
+            <td>{{ appointment['appointment_date'] }}</td>
+            <td>
+              <form
+                method="POST"
+                action="{{ url_for('cancel_appointment', appointment_id=appointment['id']) }}"
+              >
+                <button type="submit" class="btn btn-danger btn-sm">
+                  Cancel
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- De-register Patient Section -->
+    <div class="content-section" id="patients">
+      <h4>Registered Patients</h4>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Patient Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for patient in patients %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ patient['name'] }}</td>
+            <td>
+              <form
+                method="POST"
+                action="{{ url_for('deregister_patient', patient_id=patient['id']) }}"
+                style="display:inline;"
+              >
+                <button type="submit" class="btn btn-danger btn-sm">
+                  De-register
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+<!-- JavaScript to handle section visibility -->
+<script>
+  function showSection(sectionId) {
+    const sections = document.querySelectorAll('.content-section');
+    sections.forEach(section => section.style.display = 'none');
+    document.getElementById(sectionId).style.display = 'block';
+  }
+
+  // Set default section to display
+  document.addEventListener('DOMContentLoaded', function() {
+    showSection('registerPatient');
+  });
+</script>

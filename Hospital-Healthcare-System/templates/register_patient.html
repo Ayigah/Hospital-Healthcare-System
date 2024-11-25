@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block content %}
+<h3>Register a Patient</h3>
+
+<form method="POST">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" name="name" required />
+  </div>
+
+  <div class="form-group">
+    <label for="age">Age</label>
+    <input type="number" class="form-control" id="age" name="age" required />
+  </div>
+
+  <div class="form-group">
+    <label for="contact">Contact</label>
+    <input
+      type="text"
+      class="form-control"
+      id="contact"
+      name="contact"
+      required
+    />
+  </div>
+
+  <button type="submit" class="btn btn-primary mt-3">Register Patient</button>
+</form>
+
+{% endblock %}

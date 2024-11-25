@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block content %}
+<h3>Register a Doctor</h3>
+
+{% if error_message %}
+<div class="alert alert-danger">{{ error_message }}</div>
+{% endif %}
+
+<form method="POST">
+  <div class="form-group">
+    <label for="doctor_name">Doctor's Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="doctor_name"
+      name="doctor_name"
+      required
+    />
+  </div>
+
+  <button type="submit" class="btn btn-primary mt-3">Register Doctor</button>
+</form>
+
+{% endblock %}

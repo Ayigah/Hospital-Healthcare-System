@@ -1,0 +1,474 @@
+/* Global Body Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* Logout button */
+  .btn-logout {
+    background-color: crimson;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-weight: bold;
+    border-radius: 5px;
+    text-decoration: none; /* Remove underline */
+  }
+
+  .btn-logout:hover {
+    background-color: darkred;
+  }
+  /* Sticky Navbar */
+  .navbar {
+    position: fixed; /* Fix the navbar at the top */
+    top: 0;
+    width: 100%; /* Ensure it spans the full width */
+    z-index: 1020; /* Ensure the navbar stays on top */
+    background-color: #f8f9fa; /* Light background */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for effect */
+    padding: 10px 20px;
+  }
+
+/* Background and Centering */
+.home-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 65vh; /* Full screen height */
+    background-color: #ffffff; /* Dark grey background */
+    text-align: center;
+    position: relative;
+    padding: 20px;
+    flex-direction: column;
+    border-radius: 22px;
+    border: 3px solid #db2e2e;
+    margin: 30px;
+    margin-top: 80px;
+  }
+  
+  .content {
+    z-index: 1; /* Make sure content is above the image */
+  }
+  
+  h2, h3, h4 {
+    margin: 10px 0;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    color: #000000;
+    font-weight: bolder;
+  }
+  
+  h3 {
+    font-size: 1rem;
+    color: #6074f2;
+    font-weight: bold;
+  }
+  
+  .green {
+    font-size: 0.8rem;
+    color: #09cc74;
+    font-weight: 900;
+  }
+  
+  /* Button Styling */
+  .btn-primary {
+    margin-top: 20px;
+  }
+  
+  /* Image Styling */
+  .image-container img {
+    max-width: 100%;
+    max-height: 400px; /* Limit the height of the image */
+    object-fit: cover;
+    opacity: 0.8; /* Make the image less prominent */
+  }
+  
+  .home-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('{{ url_for("static", filename="images/healthcare_image.jpg") }}');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.5; /* Darken the background */
+    z-index: 0; /* Make sure the image is behind the content */
+  }
+/* Apply a dark grey background to the entire page */
+body {
+  background-color: #0a0808; /* Dark grey */
+  color: #fff;
+  font-family: 'Roboto'', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Centered container with a white background */
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 30vh; /* Full viewport height */
+  max-height: 80vh; /* Full viewport height */
+}
+
+.content-container {
+  background-color: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 80%; /* Responsive width */
+  max-width: 600px; /* Max width */
+}
+/* Styling for the login button */
+.content-container .btn-primary {
+  margin-top: 20px;
+}
+
+/* Ensure the image fills the container width */
+.image-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+  
+/* Custom Navbar Styles */
+.custom-navbar {
+  background-color: #000000; /* Transparent background */
+  border-bottom: 1px solid #e49c9c; /* Slightly visible bottom border */
+  padding-top: 10px;  /* Top padding */
+  padding-bottom: 10px;  /* Bottom padding */
+  padding-left: 3px;  /* Left padding */
+  padding-right: 3px;  /* Right padding */
+  border-radius: 6px;
+}
+
+/* Custom brand anchor tag style */
+.custom-brand {
+  font-family: 'Roboto', sans-serif;  /* Roboto font */
+  color: crimson !important;  /* Crimson color for the anchor text */
+  font-weight: bold;  /* Bold text */
+  text-transform: uppercase;  /* Uppercase letters */
+  letter-spacing: 1px;  /* Spacing between letters */
+  padding-left: 8px;
+} 
+
+.custom-brand:hover {
+  color: darkred;  /* Dark red color on hover */
+  text-decoration: none;  /* Remove underline on hover */
+}
+
+/* Optionally add some padding/margin to content */
+.container.mt-4 {
+  padding: 20px;
+}
+
+/* Center the login form container */
+.login-container {
+  max-width: 400px;
+  margin: 50px auto;  /* Center horizontally and vertically with margin */
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the form labels */
+.form-group label {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Style for the input fields */
+.form-control {
+  margin-bottom: 15px;
+  border-radius: 4px;
+  box-shadow: none;
+  border: 1px solid #ccc;
+}
+
+/* Focus effect for input fields */
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+/* Style for the submit button */
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+/* Style for error message */
+.text-danger {
+  font-size: 14px;
+  color: red;
+}
+
+/* Menu Styling */
+.list-group-item {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.list-group-item:hover {
+  background-color: #ddd;
+}
+
+.col-md-3 {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 250px;
+  height: 100%;
+  padding-top: 20px;
+  border-radius: 12px;
+  background-color: #fff;
+}
+
+.col-md-9 {
+  margin-left: 280px;
+  padding-top: 20px;
+}
+
+/* Content sections (hidden by default) */
+.content-section {
+  display: none;
+}
+
+/* Default style for forms */
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Table Styling */
+table th {
+  text-align: left;
+  font-weight: bold;
+}
+  /* Container for sidebar and content */
+  .container-fluid {
+    display: flex;
+    height: 100vh;
+  }
+
+  /* Fixed Sidebar Styling */
+  .sidebar {
+    margin-top: 50px;
+    width: 220px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #f8f9fa;
+    padding-top: 20px;
+  }
+  
+  .sidebar a {
+    display: block;
+    padding: 12px;
+    color: #000;
+    text-decoration: none;
+    border-radius: 9px;
+  }
+  
+  .sidebar a:hover {
+    background-color: #d7aeae;
+  }
+  
+  .content-area {
+    margin-left: 510px;
+    padding: 20px;
+    margin-top: 50px;
+  }
+  
+  .content-section {
+    display: none;
+  }
+  
+  .content-section:first-child {
+    display: block;
+  }
+  /* Content Section Container */
+.content-area {
+  margin-left: 30px;
+}
+
+.content-section {
+  display: none; /* Initially hidden until activated by JavaScript */
+  background-color: white;
+  padding: 40px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  margin-left: 230px ;
+  min-width: 550px;
+  
+}
+
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h4 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Form Styling */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Button Styling */
+.btn {
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+.mt-3 {
+  margin-top: 20px;
+}
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h4 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Form Styling */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Button Styling */
+.btn {
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+.mt-3 {
+  margin-top: 20px;
+}
+
+/* Table Styling */
+.table-bordered, .table-striped {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 10px;
+}
+
+/* Badge Styling */
+.badge {
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 12px;
+}
+
+.badge.bg-warning {
+  background-color: #ffc107;
+}
+
+.badge.bg-success {
+  background-color: #28a745;
+}
+
+.badge.bg-info {
+  background-color: #17a2b8;
+}
+.mt-5 {
+  margin: 5rem auto;
+  max-width: 860px;
+  width: 100%;
+}
+.alert-info {
+  margin-top: 40px;
+}
